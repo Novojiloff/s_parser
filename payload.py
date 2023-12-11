@@ -1,13 +1,3 @@
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept-Language': 'ru-RU,ru;q=0.9',
-    'Cache-Control': 'max-age=0',
-    'Upgrade-Insecure-Requests': '1',
-    'Dnt': '1',
-    }
-
 proxies = [
     '31xt2f:fub4DPuZNw@109.248.12.51:1050',
     '31xt2f:fub4DPuZNw@45.86.1.157:1050',
