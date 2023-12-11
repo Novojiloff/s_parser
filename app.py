@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
-from payload import headers, proxies, user_agents
+from config import proxies, user_agents
 from time import sleep, time
 import functools
 import random
@@ -85,17 +85,14 @@ def get_catalog_groups(url, session):
         catalog_bubble = soup.find('div', class_='CatalogBubble m-b-1').find_all('a')
         for item in catalog_bubble:
             catalog_urls[item.text.strip()] = f"https://www.samsonopt.ru{item.get('href')}"
-            # catalog_urls.append(f"https://www.samsonopt.ru{item.get('href')}")
     elif soup.find('div', class_='bigPhoto'):
         catalog_groups = soup.find('div', class_='bigPhoto').find_all('a')
         for item in catalog_groups:
             catalog_urls[item.text.strip()] = f"https://www.samsonopt.ru{item.get('href')}"
-            # catalog_urls.append(f"https://www.samsonopt.ru{item.get('href')}")
     elif soup.find('div', class_='subCatalog'):
         subcatalog = soup.find('div', class_='subCatalog').find_all('a')
         for item in subcatalog:
             catalog_urls[item.text.strip()] = f"https://www.samsonopt.ru{item.get('href')}"
-            # catalog_urls.append(f"https://www.samsonopt.ru{item.get('href')}")
     else:
         catalog_urls.append(url)
     return catalog_urls
@@ -190,13 +187,11 @@ def timer(function):
         elapsed = round(finished_time - started_time, 2)
         logger.info(f'Функция работала {elapsed} секунд(ы)')
         return result
-
     return wrapped_function
 
 
 @timer
 def main(session):
-
     file_index = datetime.now().strftime('%Y-%m-%d_%H-%M')
     result_file_path = f'.\\result\\result_{file_index}.csv'
     with open(result_file_path, mode="w", encoding='utf-8') as result_file, open('category2.txt') as f:
@@ -259,7 +254,7 @@ def main(session):
                             logger.success(f'Данные со страницы {url} успешно скопированы')
                             if pagination_url_count != 0:
                                 time_to_steep = random.uniform(3, 5)
-                                logger.info(f'Ждем {time_to_steep} секунды перед переходом на новую страницу...')
+                                logger.info(f'Ждем {time_to_steep} секунд перед переходом на новую страницу...')
                                 logger.info('='*30)
                                 sleep(time_to_steep)
                     else:
@@ -272,10 +267,10 @@ def main(session):
 
 if __name__ == "__main__":
     try:
-        logger.info(f'=====Программа запущена=====')
+        logger.info(f'Программа запущена')
         session = get_session()
         main(session=session)
-        logger.info(f'=====Программа завершена=====')
+        logger.success('Программа завершена')
     except Exception as e:
         logger.critical('Программа завершена некорректно')
         logger.critical(e)
