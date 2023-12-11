@@ -196,7 +196,7 @@ def timer(function):
 
 @timer
 def main(session):
-    logger.info(f'Программа запущена {time()}')
+    logger.info(f'=====Программа запущена=====')
     file_index = datetime.now().strftime('%Y-%m-%d_%H-%M')
     result_file_path = f'.\\result\\result_{file_index}.csv'
     with open(result_file_path, mode="w", encoding='utf-8') as result_file, open('category2.txt') as f:
@@ -268,7 +268,7 @@ def main(session):
                     logger.info(f'Ждем {time_to_steep} секунд перед переходом на другую категорию...')
                     logger.info('='*50)
                     sleep(time_to_steep)
-    logger.success('Ура! все закончилось!')
+    logger.info(f'=====Программа завершена=====')
 
 
 if __name__ == "__main__":
