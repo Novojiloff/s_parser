@@ -37,32 +37,27 @@ def get_session(proxies=proxies, user_agents=user_agents, prev_proxy=None):
 
 
 def get_html(url, session):
-    try:
-        html = session.get(url=url)
-        return html.text
-    except requests.Timeout:
-        logger.warning('Timeout occurred')
-        session = get_session()
-        html = session.get(url=url, headers=headers)
-        return html.text
-
-    except requests.ConnectionError:
-        logger.warning(f"Connection error occurred")
-        session = get_session()
-        html = session.get(url=url, headers=headers)
-        return html.text
-
-    except requests.TooManyRedirects:
-        logger.warning("Too many redirects")
-        session = get_session()
-        html = session.get(url=url, headers=headers)
-        return html.text
-
-    except requests.RequestException as error:
-        logger.warning(f"An error occurred while fetching {error}")
-        session = get_session()
-        html = session.get(url=url, headers=headers)
-        return html.text
+    while True:
+        try:
+            html = session.get(url=url)
+            break
+        except requests.Timeout:
+            logger.warning('Timeout occurred')
+            sleep(10)
+            session = get_session()
+        except requests.ConnectionError:
+            logger.warning(f"Connection error occurred")
+            sleep(10)
+            session = get_session()
+        except requests.TooManyRedirects:
+            logger.warning("Too many redirects")
+            sleep(10)
+            session = get_session()
+        except requests.RequestException as error:
+            logger.warning(f"An error occurred while fetching {error}")
+            sleep(10)
+            session = get_session()
+    return html.text
     
 
 def get_soup(html):
